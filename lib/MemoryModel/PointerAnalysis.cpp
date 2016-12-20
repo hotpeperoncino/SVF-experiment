@@ -525,10 +525,10 @@ void PointerAnalysis::validateSuccessTests(const char* fun) {
 		if (aliasRes == NoAlias) aliasResstr = "No ex ";
 
                 if (checkSuccessful)
-		  outs() << sucMsg("\t SUCCESS :") << aliasResstr << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
+		  outs() << "[" << this->PTAName() << "]" << sucMsg("\t SUCCESS :") << aliasResstr << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
                            << getSourceLoc(call) << ")\n";
                 else
-		  errs() << errMsg("\t FAIL :") << aliasResstr << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
+		  errs() << "[" << this->PTAName() << "]" << errMsg("\t FAIL :") << aliasResstr << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
                            << getSourceLoc(call) << ")\n";
             } else
                 assert(false && "alias check functions not only used at callsite??");
@@ -575,10 +575,10 @@ void PointerAnalysis::validateExpectedFailureTests(const char* fun) {
 		if (aliasRes == NoAlias) aliasResstr = "No ex ";
 
                 if (expectedFailure)
-		  outs() << sucMsg("\t EXPECTEDFAIL :") << aliasResstr << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
+		  outs() << "[" << this->PTAName() << "]"<< sucMsg("\t EXPECTEDFAIL :") << aliasResstr << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
                            << getSourceLoc(call) << ")\n";
                 else
-                    errs() << errMsg("\t UNEXPECTEDFAIL :") << aliasResstr << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
+                    errs() << "[" << this->PTAName() << "]"<< errMsg("\t UNEXPECTEDFAIL :") << aliasResstr << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
                            << getSourceLoc(call) << ")\n";
 
             }
