@@ -45,6 +45,9 @@ using namespace llvm;
 static cl::opt<bool> DisableWarn("dwarn", cl::init(true),
                                  cl::desc("Disable warning"));
 
+static cl::opt<bool> Color("color", cl::init(false),
+                                 cl::desc("Color"));
+
 /*!
  * A value represents an object if it is
  * 1) function,
@@ -316,7 +319,9 @@ std::string analysisUtil::getSourceLoc(const Value* val) {
  * print successful message by converting a string into green string output
  */
 std::string analysisUtil::sucMsg(std::string msg) {
+  if (Color)
     return KGRN + msg + KNRM;
+  return msg;
 }
 
 /*!
@@ -324,33 +329,46 @@ std::string analysisUtil::sucMsg(std::string msg) {
  */
 void analysisUtil::wrnMsg(std::string msg) {
     if(DisableWarn) return;
-    outs() << KYEL + msg + KNRM << "\n";
+  if (Color)
+        outs() << KYEL + msg + KNRM << "\n";
+  else
+    outs() << msg << "\n";
 }
 
 /*!
  * print error message by converting a string into red string output
  */
 std::string analysisUtil::errMsg(std::string msg) {
+  if (Color)
     return KRED + msg + KNRM;
+  return msg;
 }
 
 std::string analysisUtil::bugMsg1(std::string msg) {
+  if (Color)
     return KYEL + msg + KNRM;
+  return msg;
 }
 
 std::string analysisUtil::bugMsg2(std::string msg) {
+  if (Color)
     return KPUR + msg + KNRM;
+  return msg;
 }
 
 std::string analysisUtil::bugMsg3(std::string msg) {
+  if (Color)
     return KCYA + msg + KNRM;
+  return msg;
 }
 
 /*!
  * print each pass/phase message by converting a string into blue string output
  */
 std::string analysisUtil::pasMsg(std::string msg) {
+  if (Color)
     return KBLU + msg + KNRM;
+  return msg;
 }
 
 /*!
