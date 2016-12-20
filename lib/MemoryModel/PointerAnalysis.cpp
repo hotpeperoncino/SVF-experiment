@@ -519,11 +519,16 @@ void PointerAnalysis::validateSuccessTests(const char* fun) {
                 NodeID id1 = pag->getValueNode(V1);
                 NodeID id2 = pag->getValueNode(V2);
 
+		const char *aliasResstr = "unknown";		
+		if (aliasRes == MayAlias) aliasResstr = "May ex ";
+		if (aliasRes == MustAlias) aliasResstr = "Must ex ";
+		if (aliasRes == NoAlias) aliasResstr = "No ex ";
+
                 if (checkSuccessful)
-                    outs() << sucMsg("\t SUCCESS :") << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
+		  outs() << sucMsg("\t SUCCESS :") << aliasResstr << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
                            << getSourceLoc(call) << ")\n";
                 else
-                    errs() << errMsg("\t FAIL :") << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
+		  errs() << errMsg("\t FAIL :") << aliasResstr << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
                            << getSourceLoc(call) << ")\n";
             } else
                 assert(false && "alias check functions not only used at callsite??");
@@ -564,12 +569,18 @@ void PointerAnalysis::validateExpectedFailureTests(const char* fun) {
                 NodeID id1 = pag->getValueNode(V1);
                 NodeID id2 = pag->getValueNode(V2);
 
+		const char *aliasResstr = "unknown";		
+		if (aliasRes == MayAlias) aliasResstr = "May ex ";
+		if (aliasRes == MustAlias) aliasResstr = "Must ex ";
+		if (aliasRes == NoAlias) aliasResstr = "No ex ";
+
                 if (expectedFailure)
-                    outs() << sucMsg("\t EXPECTED FAIL :") << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
+		  outs() << sucMsg("\t EXPECTEDFAIL :") << aliasResstr << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
                            << getSourceLoc(call) << ")\n";
                 else
-                    errs() << errMsg("\t UNEXPECTED FAIL :") << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
+                    errs() << errMsg("\t UNEXPECTEDFAIL :") << aliasResstr << fun << " check <id:" << id1 << ", id:" << id2 << "> at ("
                            << getSourceLoc(call) << ")\n";
+
             }
             else
                 assert(false && "alias check functions not only used at callsite??");
